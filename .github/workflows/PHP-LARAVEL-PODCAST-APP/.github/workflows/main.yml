@@ -1,0 +1,110 @@
+NAME OF FILE:
+'PHP-LARAVEL-PODCAST-APP/.github/workflows/main.yml'
+
+DEPLOMENT IN THE FOLLOWING WAYS :
+
+A.GITHUB ACTIONS WORKFLOWS PIPELINE FOR CI/CD :
+B. DOCKER. 
+C. DEPLOYEMENT TO CLOUD:
+
+
+
+A. Deployment
+
+A. Using GitHub Actions workflows pipeline for CI/CD
+
+Create a workflow file `.github/workflows/ci.yml`:
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+
+      - name: Install dependencies
+        run: |
+          composer install
+
+      - name: Run tests
+        run: |
+          php artisan test
+
+      - name: Build Docker image
+        run: |
+          docker build -t podcast-app .
+
+      - name: Push Docker image
+        run: |
+          docker tag podcast-app your_dockerhub_username/podcast-app:latest
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push your_dockerhub_username/podcast-app:latest
+```
+
+B. Docker
+
+We create a `Dockerfile` in the root of our project:
+
+```dockerfile
+FROM php:8.0-fpm
+
+# Install dependencies
+RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd
+
+WORKDIR /var/www
+
+COPY . .
+
+RUN composer install
+
+CMD ["php-fpm"]
+```
+
+
+C. DEPLOYMENT TO (AWS,GCP,ACP,HEROKU ):
+
+1. **AWS**: Use Elastic Beanstalk or ECS for deploying Docker containers.
+2. **GCP**: Use Google Cloud Run or App Engine for deploying your Laravel app.
+3. **Heroku**: Use Heroku CLI to deploy Docker containers directly:
+   ```bash
+   heroku create
+   heroku container:push web
+   heroku container:release web
+   ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
