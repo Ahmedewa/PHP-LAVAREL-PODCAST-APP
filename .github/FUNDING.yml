@@ -1,0 +1,111 @@
+# Supported Funding Models
+
+Specify usernames or project names for these platforms:
+
+- GitHub Sponsors: (up to 4 usernames) e.g., [user1, user2]
+- Patreon: (single username)
+- Open Collective: (single username)
+- Ko-fi: (single username)
+- Tidelift: (single platform-name/package-name) e.g., npm/babel
+- Community Bridge: (single project-name) e.g., cloud-foundry
+- Liberapay: (single username)
+- IssueHunt: (single username)
+- LFX Crowdfunding: (single project-name) e.g., cloud-foundry
+- Polar: (single username)
+- Buy Me a Coffee: (single username)
+- thanks.dev: (single username)
+- Custom: (up to 4 URLs) e.g., ['link1', 'link2']Here's how to format the funding information:
+
+```yaml
+funding:
+  - type: github # Required
+    username: user1 # Required
+  - type: patreon # Required
+    username: patreonUser # Required
+  - type: open_collective # Required
+    username: openCollectiveUser # Required
+  - type: ko_fi # Required
+    username: kofiUser # Required
+  - type: tidelift # Required
+    platform: npm/babel # Required
+  - type: community_bridge # Required
+    project_name: cloud-foundry # Required
+  - type: liberapay # Required
+    username: liberapayUser # Required
+  - type: issuehunt # Required
+    username: issuehuntUser # Required
+  - type: lfx_crowdfunding # Required
+    project_name: cloud-foundry # Required
+  - type: polar # Required
+    username: polarUser # Required
+  - type: buy_me_a_coffee # Required
+    username: buymeacoffeeUser # Required
+  - type: thanks_dev # Required
+    username: thanksdevUser # Required
+  - type: custom # Required
+    url: "https://example.com/donate" # Required
+```
+
+**Important Considerations:**
+
+*   **Required Fields:** Ensure you include the `username`, `project_name`, `platform`, or `url` field as specified for each funding type.
+*   **Multiple GitHub Sponsors/Custom URLs:** To include multiple GitHub Sponsors usernames or custom URLs, list them within square brackets as shown in the initial example (e.g., `username: [user1, user2]` or `url: ['link1', 'link2']`). Do not create separate `- type:` entries for each.
+*   **Single Entries:** For Patreon, Open Collective, Ko-fi, Tidelift, Community Bridge, Liberapay, IssueHunt, LFX Crowdfunding, Polar, Buy Me a Coffee and thanks.dev, only one username/project name/platform is supported.
+*   **YAML Format:** This information should be placed within a YAML file (e.g., `.github/FUNDING.yml`) in your repository.
+*   **Case Sensitivity:** Be mindful of case sensitivity when entering usernames, project names, and platform names.
+*   **URL Format:** Ensure that custom URLs are valid and properly formatted.
+*   **Tidelift Platform:** For Tidelift, specify the platform and package name as `platform/package-name` (e.g., `npm/babel`, `pypi/requests`).
+*   **LFX Crowdfunding:** For LFX Crowdfunding, specify the project name as defined within the LFX platform.To help illustrate, let's walk through a few practical examples and common pitfalls to avoid when setting up your `FUNDING.yml` file:
+
+**Example 1: A Project Supporting Multiple Platforms**
+
+Let's say your project relies on GitHub Sponsors, Patreon, and a custom donation link. Here's how you'd structure your `FUNDING.yml`:
+
+```yaml
+funding:
+  - type: github
+    username: [myProjectMaintainer, anotherContributor]
+  - type: patreon
+    username: myProjectPatreon
+  - type: custom
+    url: "https://myproject.org/donate"
+```
+
+In this example, we're supporting two GitHub Sponsors usernames and directing users to our Patreon and a custom donation page.
+
+**Example 2: Using Tidelift to Support Your Project**
+
+If your project is available via npm and you're using Tidelift, your configuration would look like this:
+
+```yaml
+funding:
+  - type: tidelift
+    platform: npm/my-cool-package
+```
+
+Remember to replace `my-cool-package` with the actual name of your package on the npm registry.
+
+**Common Mistakes to Avoid:**
+
+*   **Incorrect YAML Syntax:** YAML is sensitive to indentation. Ensure your indentation is consistent (usually two spaces). Incorrect indentation can lead to parsing errors.
+*   **Multiple Entries for Single-Entry Platforms:** Don't create multiple entries for platforms like Patreon or Open Collective. For example, this is **incorrect**:
+
+```yaml
+# Incorrect
+funding:
+  - type: patreon
+    username: user1
+  - type: patreon
+    username: user2
+```
+
+The correct way is to only have one entry per platform.
+
+*   **Omitting Required Fields:** Always include the required `username`, `project_name`, `platform`, or `url` field. If a field is missing, the funding information might not be displayed correctly.
+*   **Incorrect Tidelift Platform Format:** Ensure you use the `platform/package-name` format for Tidelift. For example, using just `npm` or `my-cool-package` will not work.
+*   **Invalid URLs:** Double-check your custom URLs to ensure they are valid and accessible. Broken links will frustrate potential donors.
+*   **Confusing `project_name` with `username`:** Remember that `project_name` is specifically for Community Bridge and LFX Crowdfunding, while `username` applies to platforms like GitHub Sponsors, Patreon, Ko-fi, Liberapay, IssueHunt, Polar, Buy Me a Coffee and thanks.dev.
+*   **Case Sensitivity Issues:** Usernames and Project Names may be case sensitive. Always verify the proper casing from the source platform.
+
+By following these guidelines and examples, you can create a well-formatted `FUNDING.yml` file that effectively highlights the various ways your project can be supported. This will allow contributors and users to easily find and utilize their preferred method of contributing financially to your project's continued development and
+maintenance.
