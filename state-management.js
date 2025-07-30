@@ -1,0 +1,81 @@
+
+
+
+**State Management in Flutter**
+
+**Problem**: Managing app state efficiently.
+
+**Solution**: Use a state management library like **Provider**, **Riverpod**, or **Bloc**.
+
+---
+
+ **Implementation with Provider**
+
+1. Add `provider` to `pubspec.yaml`:
+
+   ```yaml
+   dependencies:
+     provider: ^6.0.0
+   ```
+
+2. Create a `UserProvider` class:
+   ```dart
+   import 'package:flutter/material.dart';
+
+   class UserProvider extends ChangeNotifier {
+     String _token = '';
+
+     String get token => _token;
+
+     void setToken(String token) {
+       _token = token;
+       notifyListeners();
+     }
+   }
+   ```
+
+3. Provide the `UserProvider` to the app:
+
+   ```dart
+   void main() {
+     runApp(
+       MultiProvider(
+         providers: [
+           ChangeNotifierProvider(create: (_) => UserProvider()),
+         ],
+         child: MyApp(),
+       ),
+     );
+   }
+   ```
+
+4. Access State in Widgets:
+   ```dart
+   import 'package:provider/provider.dart';
+
+   @override
+   Widget build(BuildContext context) {
+     final userProvider = Provider.of<UserProvider>(context);
+
+     return Text('Token: ${userProvider.token}');
+   }
+   ```
+
+---
+
+**Best Practices**
+1. Use **Riverpod** or **Bloc** for large-scale apps with complex state management.
+2. Avoid storing sensitive data (like tokens) in memory; use secure storage.
+
+---
+
+**Summary**
+
+| **Feature**                  | **Implementation**                                                                 |
+|------------------------------|-------------------------------------------------------------------------------------|
+| RabbitMQ Setup               | Docker container setup, Laravel producer/consumer code.                            |
+| CI/CD for Flutter            | GitHub Actions workflow to build and test the app.                                 |
+| Grafana & Prometheus         | Docker-based setup and integration for monitoring and visualization.               |
+| Laravel Error Handling       | Global exception handler for consistent JSON responses.                            |
+| Flutter State Management     | `Provider` example, with options for `Riverpod` and `Bloc`.                        |
+
